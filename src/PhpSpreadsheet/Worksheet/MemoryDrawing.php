@@ -2,8 +2,10 @@
 
 namespace PhpOffice\PhpSpreadsheet\Worksheet;
 
+use PhpOffice\PhpSpreadsheet\IComparable;
+
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,19 +14,19 @@ namespace PhpOffice\PhpSpreadsheet\Worksheet;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
-class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparable
+class MemoryDrawing extends BaseDrawing implements IComparable
 {
     /* Rendering functions */
     const RENDERING_DEFAULT = 'imagepng';
@@ -39,35 +41,35 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     const MIMETYPE_JPEG = 'image/jpeg';
 
     /**
-     * Image resource
+     * Image resource.
      *
      * @var resource
      */
     private $imageResource;
 
     /**
-     * Rendering function
+     * Rendering function.
      *
      * @var string
      */
     private $renderingFunction;
 
     /**
-     * Mime type
+     * Mime type.
      *
      * @var string
      */
     private $mimeType;
 
     /**
-     * Unique name
+     * Unique name.
      *
      * @var string
      */
     private $uniqueName;
 
     /**
-     * Create a new MemoryDrawing
+     * Create a new MemoryDrawing.
      */
     public function __construct()
     {
@@ -82,7 +84,7 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     }
 
     /**
-     * Get image resource
+     * Get image resource.
      *
      * @return resource
      */
@@ -92,12 +94,13 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     }
 
     /**
-     * Set image resource
+     * Set image resource.
      *
-     * @param    $value resource
+     * @param resource $value
+     *
      * @return MemoryDrawing
      */
-    public function setImageResource($value = null)
+    public function setImageResource($value)
     {
         $this->imageResource = $value;
 
@@ -111,7 +114,7 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     }
 
     /**
-     * Get rendering function
+     * Get rendering function.
      *
      * @return string
      */
@@ -121,12 +124,13 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     }
 
     /**
-     * Set rendering function
+     * Set rendering function.
      *
-     * @param string $value
+     * @param string $value see self::RENDERING_*
+     *
      * @return MemoryDrawing
      */
-    public function setRenderingFunction($value = self::RENDERING_DEFAULT)
+    public function setRenderingFunction($value)
     {
         $this->renderingFunction = $value;
 
@@ -134,7 +138,7 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     }
 
     /**
-     * Get mime type
+     * Get mime type.
      *
      * @return string
      */
@@ -144,12 +148,13 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     }
 
     /**
-     * Set mime type
+     * Set mime type.
      *
-     * @param string $value
+     * @param string $value see self::MIMETYPE_*
+     *
      * @return MemoryDrawing
      */
-    public function setMimeType($value = self::MIMETYPE_DEFAULT)
+    public function setMimeType($value)
     {
         $this->mimeType = $value;
 
@@ -157,7 +162,7 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     }
 
     /**
-     * Get indexed filename (using image index)
+     * Get indexed filename (using image index).
      *
      * @return string
      */
@@ -171,9 +176,9 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
     }
 
     /**
-     * Get hash code
+     * Get hash code.
      *
-     * @return string    Hash code
+     * @return string Hash code
      */
     public function getHashCode()
     {
@@ -194,7 +199,7 @@ class MemoryDrawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\ICo
         $vars = get_object_vars($this);
         foreach ($vars as $key => $value) {
             if (is_object($value)) {
-                $this->$key = clone $value;
+                $this->$key = unserialize(serialize($value));
             } else {
                 $this->$key = $value;
             }

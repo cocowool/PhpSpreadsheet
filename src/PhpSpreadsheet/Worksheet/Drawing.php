@@ -2,8 +2,11 @@
 
 namespace PhpOffice\PhpSpreadsheet\Worksheet;
 
+use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use PhpOffice\PhpSpreadsheet\IComparable;
+
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,29 +15,29 @@ namespace PhpOffice\PhpSpreadsheet\Worksheet;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
-class Drawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparable
+class Drawing extends BaseDrawing implements IComparable
 {
     /**
-     * Path
+     * Path.
      *
      * @var string
      */
     private $path;
 
     /**
-     * Create a new Drawing
+     * Create a new Drawing.
      */
     public function __construct()
     {
@@ -46,7 +49,7 @@ class Drawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparab
     }
 
     /**
-     * Get Filename
+     * Get Filename.
      *
      * @return string
      */
@@ -56,7 +59,7 @@ class Drawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparab
     }
 
     /**
-     * Get indexed filename (using image index)
+     * Get indexed filename (using image index).
      *
      * @return string
      */
@@ -69,7 +72,7 @@ class Drawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparab
     }
 
     /**
-     * Get Extension
+     * Get Extension.
      *
      * @return string
      */
@@ -81,7 +84,7 @@ class Drawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparab
     }
 
     /**
-     * Get Path
+     * Get Path.
      *
      * @return string
      */
@@ -91,14 +94,16 @@ class Drawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparab
     }
 
     /**
-     * Set Path
+     * Set Path.
      *
-     * @param   string         $pValue            File path
-     * @param   bool        $pVerifyFile    Verify file
-     * @throws  \PhpOffice\PhpSpreadsheet\Exception
-     * @return  Drawing
+     * @param string $pValue File path
+     * @param bool $pVerifyFile Verify file
+     *
+     * @throws PhpSpreadsheetException
+     *
+     * @return Drawing
      */
-    public function setPath($pValue = '', $pVerifyFile = true)
+    public function setPath($pValue, $pVerifyFile = true)
     {
         if ($pVerifyFile) {
             if (file_exists($pValue)) {
@@ -109,7 +114,7 @@ class Drawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparab
                     list($this->width, $this->height) = getimagesize($pValue);
                 }
             } else {
-                throw new \PhpOffice\PhpSpreadsheet\Exception("File $pValue not found!");
+                throw new PhpSpreadsheetException("File $pValue not found!");
             }
         } else {
             $this->path = $pValue;
@@ -119,9 +124,9 @@ class Drawing extends BaseDrawing implements \PhpOffice\PhpSpreadsheet\IComparab
     }
 
     /**
-     * Get hash code
+     * Get hash code.
      *
-     * @return string    Hash code
+     * @return string Hash code
      */
     public function getHashCode()
     {

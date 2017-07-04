@@ -4,17 +4,18 @@ namespace PhpOffice\PhpSpreadsheetTests\Shared;
 
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Shared\CodePage;
+use PHPUnit_Framework_TestCase;
 
-class CodePageTest extends \PHPUnit_Framework_TestCase
+class CodePageTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider providerCodePage
+     *
+     * @param mixed $expectedResult
      */
-    public function testCodePageNumberToName()
+    public function testCodePageNumberToName($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([CodePage::class, 'numberToName'], $args);
+        $result = CodePage::numberToName(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 

@@ -5,8 +5,9 @@ namespace PhpOffice\PhpSpreadsheetTests\Worksheet;
 use PhpOffice\PhpSpreadsheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Column;
 use PhpOffice\PhpSpreadsheet\Worksheet\ColumnCellIterator;
+use PHPUnit_Framework_TestCase;
 
-class WorksheetColumnTest extends \PHPUnit_Framework_TestCase
+class WorksheetColumnTest extends PHPUnit_Framework_TestCase
 {
     public $mockWorksheet;
     public $mockColumn;
@@ -17,8 +18,8 @@ class WorksheetColumnTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockWorksheet->expects($this->any())
-                 ->method('getHighestRow')
-                 ->will($this->returnValue(5));
+            ->method('getHighestRow')
+            ->will($this->returnValue(5));
     }
 
     public function testInstantiateColumnDefault()

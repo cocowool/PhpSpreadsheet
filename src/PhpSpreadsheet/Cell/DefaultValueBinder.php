@@ -2,8 +2,13 @@
 
 namespace PhpOffice\PhpSpreadsheet\Cell;
 
+use DateTime;
+use PhpOffice\PhpSpreadsheet\Cell;
+use PhpOffice\PhpSpreadsheet\RichText;
+use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,37 +17,38 @@ namespace PhpOffice\PhpSpreadsheet\Cell;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
 class DefaultValueBinder implements IValueBinder
 {
     /**
-     * Bind value to a cell
+     * Bind value to a cell.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Cell  $cell   Cell to bind value to
-     * @param  mixed          $value  Value to bind in cell
+     * @param Cell $cell Cell to bind value to
+     * @param mixed $value Value to bind in cell
+     *
      * @return bool
      */
-    public function bindValue(\PhpOffice\PhpSpreadsheet\Cell $cell, $value = null)
+    public function bindValue(Cell $cell, $value = null)
     {
         // sanitize UTF-8 strings
         if (is_string($value)) {
-            $value = \PhpOffice\PhpSpreadsheet\Shared\StringHelper::sanitizeUTF8($value);
+            $value = StringHelper::sanitizeUTF8($value);
         } elseif (is_object($value)) {
             // Handle any objects that might be injected
-            if ($value instanceof \DateTime) {
+            if ($value instanceof DateTime) {
                 $value = $value->format('Y-m-d H:i:s');
-            } elseif (!($value instanceof \PhpOffice\PhpSpreadsheet\RichText)) {
+            } elseif (!($value instanceof RichText)) {
                 $value = (string) $value;
             }
         }
@@ -55,21 +61,22 @@ class DefaultValueBinder implements IValueBinder
     }
 
     /**
-     * DataType for value
+     * DataType for value.
      *
-     * @param   mixed  $pValue
-     * @return  string
+     * @param mixed $pValue
+     *
+     * @return string
      */
-    public static function dataTypeForValue($pValue = null)
+    public static function dataTypeForValue($pValue)
     {
         // Match the value against a few data types
         if ($pValue === null) {
             return DataType::TYPE_NULL;
         } elseif ($pValue === '') {
             return DataType::TYPE_STRING;
-        } elseif ($pValue instanceof \PhpOffice\PhpSpreadsheet\RichText) {
+        } elseif ($pValue instanceof RichText) {
             return DataType::TYPE_INLINE;
-        } elseif ($pValue{0} === '=' && strlen($pValue) > 1) {
+        } elseif ($pValue[0] === '=' && strlen($pValue) > 1) {
             return DataType::TYPE_FORMULA;
         } elseif (is_bool($pValue)) {
             return DataType::TYPE_BOOL;
@@ -77,7 +84,7 @@ class DefaultValueBinder implements IValueBinder
             return DataType::TYPE_NUMERIC;
         } elseif (preg_match('/^[\+\-]?([0-9]+\\.?[0-9]*|[0-9]*\\.?[0-9]+)([Ee][\-\+]?[0-2]?\d{1,3})?$/', $pValue)) {
             $tValue = ltrim($pValue, '+-');
-            if (is_string($pValue) && $tValue{0} === '0' && strlen($tValue) > 1 && $tValue{1} !== '.') {
+            if (is_string($pValue) && $tValue[0] === '0' && strlen($tValue) > 1 && $tValue[1] !== '.') {
                 return DataType::TYPE_STRING;
             } elseif ((strpos($pValue, '.') === false) && ($pValue > PHP_INT_MAX)) {
                 return DataType::TYPE_STRING;

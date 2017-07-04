@@ -3,8 +3,9 @@
 namespace PhpOffice\PhpSpreadsheetTests\Calculation;
 
 use PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use PHPUnit_Framework_TestCase;
 
-class FunctionsTest extends \PHPUnit_Framework_TestCase
+class FunctionsTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
@@ -61,12 +62,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsBlank
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsBlank()
+    public function testIsBlank($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isBlank'], $args);
+        $result = Functions::isBlank(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -77,12 +78,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsErr
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsErr()
+    public function testIsErr($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isErr'], $args);
+        $result = Functions::isErr(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -93,12 +94,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsError
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsError()
+    public function testIsError($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isError'], $args);
+        $result = Functions::isError(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -109,12 +110,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerErrorType
+     *
+     * @param mixed $expectedResult
      */
-    public function testErrorType()
+    public function testErrorType($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'errorType'], $args);
+        $result = Functions::errorType(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -125,12 +126,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsLogical
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsLogical()
+    public function testIsLogical($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isLogical'], $args);
+        $result = Functions::isLogical(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -141,12 +142,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsNa
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsNa()
+    public function testIsNa($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isNa'], $args);
+        $result = Functions::isNa(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -157,12 +158,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsNumber
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsNumber()
+    public function testIsNumber($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isNumber'], $args);
+        $result = Functions::isNumber(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -173,12 +174,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsText
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsText()
+    public function testIsText($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isText'], $args);
+        $result = Functions::isText(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -189,12 +190,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsNonText
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsNonText()
+    public function testIsNonText($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isNonText'], $args);
+        $result = Functions::isNonText(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -205,12 +206,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsEven
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsEven()
+    public function testIsEven($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isEven'], $args);
+        $result = Functions::isEven(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -221,12 +222,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsOdd
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsOdd()
+    public function testIsOdd($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'isOdd'], $args);
+        $result = Functions::isOdd(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -237,12 +238,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerTYPE
+     *
+     * @param mixed $expectedResult
      */
-    public function testTYPE()
+    public function testTYPE($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'TYPE'], $args);
+        $result = Functions::TYPE(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 
@@ -253,12 +254,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerN
+     *
+     * @param mixed $expectedResult
      */
-    public function testN()
+    public function testN($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Functions::class, 'n'], $args);
+        $result = Functions::n(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-8);
     }
 

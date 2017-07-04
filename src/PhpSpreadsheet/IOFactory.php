@@ -2,8 +2,10 @@
 
 namespace PhpOffice\PhpSpreadsheet;
 
+use PhpOffice\PhpSpreadsheet\Shared\File;
+
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,24 +14,24 @@ namespace PhpOffice\PhpSpreadsheet;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
 class IOFactory
 {
     /**
-     * Search locations
+     * Search locations.
      *
-     * @var    array
+     * @var array
      * @static
      */
     private static $searchLocations = [
@@ -38,34 +40,35 @@ class IOFactory
     ];
 
     /**
-     * Autoresolve classes
+     * Autoresolve classes.
      *
-     * @var    array
+     * @var array
      * @static
      */
     private static $autoResolveClasses = [
         'Xlsx',
         'Xls',
-        'Excel2003XML',
+        'Xml',
         'Ods',
-        'SYLK',
+        'Slk',
         'Gnumeric',
-        'HTML',
-        'CSV',
+        'Html',
+        'Csv',
     ];
 
     /**
-     *    Private constructor for IOFactory
+     * Private constructor for IOFactory.
      */
     private function __construct()
     {
     }
 
     /**
-     * Get search locations
+     * Get search locations.
      *
      * @static
-     * @return    array
+     *
+     * @return array
      */
     public static function getSearchLocations()
     {
@@ -73,44 +76,46 @@ class IOFactory
     }
 
     /**
-     * Set search locations
+     * Set search locations.
      *
      * @static
-     * @param    array $value
-     * @throws    Reader\Exception
+     *
+     * @param array $value
+     *
+     * @throws Reader\Exception
      */
-    public static function setSearchLocations($value)
+    public static function setSearchLocations(array $value)
     {
-        if (is_array($value)) {
-            self::$searchLocations = $value;
-        } else {
-            throw new Reader\Exception('Invalid parameter passed.');
-        }
+        self::$searchLocations = $value;
     }
 
     /**
-     * Add search location
+     * Add search location.
      *
      * @static
-     * @param    string $type        Example: IWriter
-     * @param    string $location    Example: PhpSpreadsheet/Writer/{0}.php
-     * @param    string $classname     Example: Writer\{0}
+     *
+     * @param string $type Example: IWriter
+     * @param string $location Example: PhpSpreadsheet/Writer/{0}.php
+     * @param string $classname Example: Writer\{0}
      */
-    public static function addSearchLocation($type = '', $location = '', $classname = '')
+    public static function addSearchLocation($type, $location, $classname)
     {
         self::$searchLocations[] = ['type' => $type, 'path' => $location, 'class' => $classname];
     }
 
     /**
-     * Create Writer\IWriter
+     * Create Writer\IWriter.
      *
      * @static
-     * @param    Spreadsheet $spreadsheet
-     * @param    string  $writerType    Example: Xlsx
-     * @throws    Writer\Exception
-     * @return    Writer\IWriter
+     *
+     * @param Spreadsheet $spreadsheet
+     * @param string $writerType Example: Xlsx
+     *
+     * @throws Writer\Exception
+     *
+     * @return Writer\IWriter
      */
-    public static function createWriter(Spreadsheet $spreadsheet, $writerType = '')
+    public static function createWriter(Spreadsheet $spreadsheet, $writerType)
     {
         // Search type
         $searchType = 'IWriter';
@@ -132,14 +137,17 @@ class IOFactory
     }
 
     /**
-     * Create Reader\IReader
+     * Create Reader\IReader.
      *
      * @static
-     * @param    string $readerType    Example: Xlsx
-     * @throws    Reader\Exception
-     * @return    Reader\IReader
+     *
+     * @param string $readerType Example: Xlsx
+     *
+     * @throws Reader\Exception
+     *
+     * @return Reader\IReader
      */
-    public static function createReader($readerType = '')
+    public static function createReader($readerType)
     {
         // Search type
         $searchType = 'IReader';
@@ -161,12 +169,15 @@ class IOFactory
     }
 
     /**
-     * Loads Spreadsheet from file using automatic Reader\IReader resolution
+     * Loads Spreadsheet from file using automatic Reader\IReader resolution.
      *
      * @static
-     * @param     string         $pFilename        The name of the spreadsheet file
-     * @throws    Reader\Exception
-     * @return    Spreadsheet
+     *
+     * @param string $pFilename The name of the spreadsheet file
+     *
+     * @throws Reader\Exception
+     *
+     * @return Spreadsheet
      */
     public static function load($pFilename)
     {
@@ -176,12 +187,15 @@ class IOFactory
     }
 
     /**
-     * Identify file type using automatic Reader\IReader resolution
+     * Identify file type using automatic Reader\IReader resolution.
      *
      * @static
-     * @param     string         $pFilename        The name of the spreadsheet file to identify
-     * @throws    Reader\Exception
-     * @return    string
+     *
+     * @param string $pFilename The name of the spreadsheet file to identify
+     *
+     * @throws Reader\Exception
+     *
+     * @return string
      */
     public static function identify($pFilename)
     {
@@ -194,15 +208,20 @@ class IOFactory
     }
 
     /**
-     * Create Reader\IReader for file using automatic Reader\IReader resolution
+     * Create Reader\IReader for file using automatic Reader\IReader resolution.
      *
      * @static
-     * @param     string         $pFilename        The name of the spreadsheet file
-     * @throws    Reader\Exception
-     * @return    Reader\IReader
+     *
+     * @param string $pFilename The name of the spreadsheet file
+     *
+     * @throws Reader\Exception
+     *
+     * @return Reader\IReader
      */
     public static function createReaderForFile($pFilename)
     {
+        File::assertFile($pFilename);
+
         // First, lucky guess by inspecting file extension
         $pathinfo = pathinfo($pFilename);
 
@@ -224,17 +243,17 @@ class IOFactory
                     $extensionType = 'Ods';
                     break;
                 case 'slk':
-                    $extensionType = 'SYLK';
+                    $extensionType = 'Slk';
                     break;
                 case 'xml':                //    Excel 2003 SpreadSheetML
-                    $extensionType = 'Excel2003XML';
+                    $extensionType = 'Xml';
                     break;
                 case 'gnumeric':
                     $extensionType = 'Gnumeric';
                     break;
                 case 'htm':
                 case 'html':
-                    $extensionType = 'HTML';
+                    $extensionType = 'Html';
                     break;
                 case 'csv':
                     // Do nothing

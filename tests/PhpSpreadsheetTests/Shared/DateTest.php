@@ -3,8 +3,9 @@
 namespace PhpOffice\PhpSpreadsheetTests\Shared;
 
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PHPUnit_Framework_TestCase;
 
-class DateTest extends \PHPUnit_Framework_TestCase
+class DateTest extends PHPUnit_Framework_TestCase
 {
     public function testSetExcelCalendar()
     {
@@ -28,14 +29,14 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerDateTimeExcelToTimestamp1900
+     *
+     * @param mixed $expectedResult
      */
-    public function testDateTimeExcelToTimestamp1900()
+    public function testDateTimeExcelToTimestamp1900($expectedResult, ...$args)
     {
         Date::setExcelCalendar(Date::CALENDAR_WINDOWS_1900);
 
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Date::class, 'excelToTimestamp'], $args);
+        $result = Date::excelToTimestamp(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -46,14 +47,14 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerDateTimeTimestampToExcel1900
+     *
+     * @param mixed $expectedResult
      */
-    public function testDateTimeTimestampToExcel1900()
+    public function testDateTimeTimestampToExcel1900($expectedResult, ...$args)
     {
         Date::setExcelCalendar(Date::CALENDAR_WINDOWS_1900);
 
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Date::class, 'timestampToExcel'], $args);
+        $result = Date::timestampToExcel(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-5);
     }
 
@@ -64,14 +65,14 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerDateTimeDateTimeToExcel
+     *
+     * @param mixed $expectedResult
      */
-    public function testDateTimeDateTimeToExcel()
+    public function testDateTimeDateTimeToExcel($expectedResult, ...$args)
     {
         Date::setExcelCalendar(Date::CALENDAR_WINDOWS_1900);
 
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Date::class, 'dateTimeToExcel'], $args);
+        $result = Date::dateTimeToExcel(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-5);
     }
 
@@ -82,14 +83,14 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerDateTimeFormattedPHPToExcel1900
+     *
+     * @param mixed $expectedResult
      */
-    public function testDateTimeFormattedPHPToExcel1900()
+    public function testDateTimeFormattedPHPToExcel1900($expectedResult, ...$args)
     {
         Date::setExcelCalendar(Date::CALENDAR_WINDOWS_1900);
 
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Date::class, 'formattedPHPToExcel'], $args);
+        $result = Date::formattedPHPToExcel(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-5);
     }
 
@@ -100,14 +101,14 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerDateTimeExcelToTimestamp1904
+     *
+     * @param mixed $expectedResult
      */
-    public function testDateTimeExcelToTimestamp1904()
+    public function testDateTimeExcelToTimestamp1904($expectedResult, ...$args)
     {
         Date::setExcelCalendar(Date::CALENDAR_MAC_1904);
 
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Date::class, 'excelToTimestamp'], $args);
+        $result = Date::excelToTimestamp(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -118,14 +119,14 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerDateTimeTimestampToExcel1904
+     *
+     * @param mixed $expectedResult
      */
-    public function testDateTimeTimestampToExcel1904()
+    public function testDateTimeTimestampToExcel1904($expectedResult, ...$args)
     {
         Date::setExcelCalendar(Date::CALENDAR_MAC_1904);
 
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Date::class, 'timestampToExcel'], $args);
+        $result = Date::timestampToExcel(...$args);
         $this->assertEquals($expectedResult, $result, null, 1E-5);
     }
 
@@ -136,12 +137,12 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIsDateTimeFormatCode
+     *
+     * @param mixed $expectedResult
      */
-    public function testIsDateTimeFormatCode()
+    public function testIsDateTimeFormatCode($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Date::class, 'isDateTimeFormatCode'], $args);
+        $result = Date::isDateTimeFormatCode(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -152,14 +153,14 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerDateTimeExcelToTimestamp1900Timezone
+     *
+     * @param mixed $expectedResult
      */
-    public function testDateTimeExcelToTimestamp1900Timezone()
+    public function testDateTimeExcelToTimestamp1900Timezone($expectedResult, ...$args)
     {
         Date::setExcelCalendar(Date::CALENDAR_WINDOWS_1900);
 
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Date::class, 'excelToTimestamp'], $args);
+        $result = Date::excelToTimestamp(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 

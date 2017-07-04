@@ -1,8 +1,13 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Settings;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 require_once __DIR__ . '/../src/Bootstrap.php';
 
-$helper = new \PhpOffice\PhpSpreadsheet\Helper\Sample();
+$helper = new Sample();
 if ($helper->isCli()) {
     echo 'This example should only be run from a Web Browser' . PHP_EOL;
 
@@ -12,15 +17,11 @@ if ($helper->isCli()) {
 //	Change these values to select the Rendering library that you wish to use
 //		and its directory location on your server
 //$rendererName = \PhpOffice\PhpSpreadsheet\Settings::PDF_RENDERER_TCPDF;
-$rendererName = \PhpOffice\PhpSpreadsheet\Settings::PDF_RENDERER_MPDF;
+$rendererName = Settings::PDF_RENDERER_MPDF;
 //$rendererName = \PhpOffice\PhpSpreadsheet\Settings::PDF_RENDERER_DOMPDF;
-//$rendererLibrary = 'tcPDF5.9';
-$rendererLibrary = 'mPDF5.4';
-//$rendererLibrary = 'domPDF0.6.0beta3';
-$rendererLibraryPath = __DIR__ . '/../../../libraries/PDF/' . $rendererLibrary;
 
 // Create new Spreadsheet object
-$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
 $spreadsheet->getProperties()->setCreator('Maarten Balliauw')
@@ -50,17 +51,13 @@ $spreadsheet->getActiveSheet()->setShowGridLines(false);
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
-if (!\PhpOffice\PhpSpreadsheet\Settings::setPdfRenderer($rendererName, $rendererLibraryPath)) {
-    $helper->log('NOTICE: Please set the $rendererName and $rendererLibraryPath values at the top of this script as appropriate for your directory structure');
-
-    return;
-}
+Settings::setPdfRendererName($rendererName);
 
 // Redirect output to a client’s web browser (PDF)
 header('Content-Type: application/pdf');
 header('Content-Disposition: attachment;filename="01simple.pdf"');
 header('Cache-Control: max-age=0');
 
-$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'PDF');
+$writer = IOFactory::createWriter($spreadsheet, 'Pdf');
 $writer->save('php://output');
 exit;

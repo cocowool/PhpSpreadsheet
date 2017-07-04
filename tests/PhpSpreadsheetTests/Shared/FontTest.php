@@ -3,8 +3,9 @@
 namespace PhpOffice\PhpSpreadsheetTests\Shared;
 
 use PhpOffice\PhpSpreadsheet\Shared\Font;
+use PHPUnit_Framework_TestCase;
 
-class FontTest extends \PHPUnit_Framework_TestCase
+class FontTest extends PHPUnit_Framework_TestCase
 {
     public function testGetAutoSizeMethod()
     {
@@ -37,12 +38,12 @@ class FontTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerFontSizeToPixels
+     *
+     * @param mixed $expectedResult
      */
-    public function testFontSizeToPixels()
+    public function testFontSizeToPixels($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Font::class, 'fontSizeToPixels'], $args);
+        $result = Font::fontSizeToPixels(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -53,12 +54,12 @@ class FontTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerInchSizeToPixels
+     *
+     * @param mixed $expectedResult
      */
-    public function testInchSizeToPixels()
+    public function testInchSizeToPixels($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Font::class, 'inchSizeToPixels'], $args);
+        $result = Font::inchSizeToPixels(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -69,12 +70,12 @@ class FontTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerCentimeterSizeToPixels
+     *
+     * @param mixed $expectedResult
      */
-    public function testCentimeterSizeToPixels()
+    public function testCentimeterSizeToPixels($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Font::class, 'centimeterSizeToPixels'], $args);
+        $result = Font::centimeterSizeToPixels(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 

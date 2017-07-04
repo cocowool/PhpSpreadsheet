@@ -33,14 +33,14 @@ PhpSpreadsheet is a library written in pure PHP and providing a set of classes t
 
 ## Requirements
 
- * PHP version 5.5.0 or higher
- * PHP extension php_zip enabled (required if you need PhpSpreadsheet to handle .xlsx .ods or .gnumeric files)
+ * PHP version 5.6 or higher
+ * PHP extension php_zip enabled
  * PHP extension php_xml enabled
  * PHP extension php_gd2 enabled (optional, but required for exact column width autocalculation)
 
 ## PHP version support
 
- * Support for PHP versions will only be maintained for a period of six months beyond the end-of-life of that PHP version
+Support for PHP versions will only be maintained for a period of six months beyond the end-of-life of that PHP version
 
 ## Want to contribute?
 

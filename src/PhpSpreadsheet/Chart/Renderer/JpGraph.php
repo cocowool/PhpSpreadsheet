@@ -2,10 +2,11 @@
 
 namespace PhpOffice\PhpSpreadsheet\Chart\Renderer;
 
-require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . '/jpgraph.php';
+use PhpOffice\PhpSpreadsheet\Chart;
+use PhpOffice\PhpSpreadsheet\Settings;
 
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -14,17 +15,17 @@ require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . '/jpgr
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category    PhpSpreadsheet
+ *
  * @copyright    Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license        http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version        ##VERSION##, ##DATE##
  */
 class JpGraph
 {
@@ -107,7 +108,7 @@ class JpGraph
             } else {
                 //    Format labels according to any formatting code
                 if (!is_null($datasetLabelFormatCode)) {
-                    $datasetLabels[$i] = \PhpOffice\PhpSpreadsheet\Style\NumberFormat::toFormattedString($datasetLabel, $datasetLabelFormatCode);
+                    $datasetLabels[$i] = NumberFormat::toFormattedString($datasetLabel, $datasetLabelFormatCode);
                 }
             }
             ++$testCurrentIndex;
@@ -544,7 +545,7 @@ class JpGraph
 
     private function renderAreaChart($groupCount, $dimensions = '2d')
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_line.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_line.php';
 
         $this->renderCartesianPlotArea();
 
@@ -555,7 +556,7 @@ class JpGraph
 
     private function renderLineChart($groupCount, $dimensions = '2d')
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_line.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_line.php';
 
         $this->renderCartesianPlotArea();
 
@@ -566,7 +567,7 @@ class JpGraph
 
     private function renderBarChart($groupCount, $dimensions = '2d')
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_bar.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_bar.php';
 
         $this->renderCartesianPlotArea();
 
@@ -577,9 +578,9 @@ class JpGraph
 
     private function renderScatterChart($groupCount)
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_scatter.php';
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_regstat.php';
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_line.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_scatter.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_regstat.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_line.php';
 
         $this->renderCartesianPlotArea('linlin');
 
@@ -590,7 +591,7 @@ class JpGraph
 
     private function renderBubbleChart($groupCount)
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_scatter.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_scatter.php';
 
         $this->renderCartesianPlotArea('linlin');
 
@@ -601,9 +602,9 @@ class JpGraph
 
     private function renderPieChart($groupCount, $dimensions = '2d', $doughnut = false, $multiplePlots = false)
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_pie.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_pie.php';
         if ($dimensions == '3d') {
-            require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_pie3d.php';
+            require_once Settings::getChartRendererPath() . 'jpgraph_pie3d.php';
         }
 
         $this->renderPiePlotArea($doughnut);
@@ -677,7 +678,7 @@ class JpGraph
 
     private function renderRadarChart($groupCount)
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_radar.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_radar.php';
 
         $this->renderRadarPlotArea();
 
@@ -688,7 +689,7 @@ class JpGraph
 
     private function renderStockChart($groupCount)
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_stock.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_stock.php';
 
         $this->renderCartesianPlotArea('intint');
 
@@ -699,7 +700,7 @@ class JpGraph
 
     private function renderContourChart($groupCount, $dimensions)
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_contour.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_contour.php';
 
         $this->renderCartesianPlotArea('intint');
 
@@ -710,11 +711,11 @@ class JpGraph
 
     private function renderCombinationChart($groupCount, $dimensions, $outputDestination)
     {
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_line.php';
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_bar.php';
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_scatter.php';
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_regstat.php';
-        require_once \PhpOffice\PhpSpreadsheet\Settings::getChartRendererPath() . 'jpgraph_line.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_line.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_bar.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_scatter.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_regstat.php';
+        require_once Settings::getChartRendererPath() . 'jpgraph_line.php';
 
         $this->renderCartesianPlotArea();
 
@@ -833,7 +834,7 @@ class JpGraph
                 $this->renderContourChart($groupCount, $dimensions);
                 break;
             case 'stockChart':
-                $this->renderStockChart($groupCount, $dimensions);
+                $this->renderStockChart($groupCount);
                 break;
             default:
                 echo $chartType . ' is not yet implemented<br />';
@@ -848,11 +849,13 @@ class JpGraph
     }
 
     /**
-     * Create a new jpgraph
+     * Create a new jpgraph.
      */
-    public function __construct(\PhpOffice\PhpSpreadsheet\Chart $chart)
+    public function __construct(Chart $chart)
     {
         $this->graph = null;
         $this->chart = $chart;
+
+        require_once Settings::getChartRendererPath() . '/jpgraph.php';
     }
 }

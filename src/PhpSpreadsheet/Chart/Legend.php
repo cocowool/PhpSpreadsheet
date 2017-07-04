@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpSpreadsheet\Chart;
 
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,17 +12,17 @@ namespace PhpOffice\PhpSpreadsheet\Chart;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category    PhpSpreadsheet
+ *
  * @copyright   Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version     ##VERSION##, ##DATE##
  */
 class Legend
 {
@@ -50,28 +50,32 @@ class Legend
     ];
 
     /**
-     * Legend position
+     * Legend position.
      *
-     * @var    string
+     * @var string
      */
     private $position = self::POSITION_RIGHT;
 
     /**
      * Allow overlay of other elements?
      *
-     * @var    bool
+     * @var bool
      */
     private $overlay = true;
 
     /**
-     * Legend Layout
+     * Legend Layout.
      *
-     * @var    Layout
+     * @var Layout
      */
     private $layout = null;
 
     /**
-     *    Create a new Legend
+     * Create a new Legend.
+     *
+     * @param string $position
+     * @param Layout|null $layout
+     * @param bool $overlay
      */
     public function __construct($position = self::POSITION_RIGHT, Layout $layout = null, $overlay = false)
     {
@@ -81,9 +85,9 @@ class Legend
     }
 
     /**
-     * Get legend position as an excel string value
+     * Get legend position as an excel string value.
      *
-     * @return    string
+     * @return string
      */
     public function getPosition()
     {
@@ -91,11 +95,11 @@ class Legend
     }
 
     /**
-     * Get legend position using an excel string value
+     * Get legend position using an excel string value.
      *
-     * @param    string    $position
+     * @param string $position see self::POSITION_*
      */
-    public function setPosition($position = self::POSITION_RIGHT)
+    public function setPosition($position)
     {
         if (!in_array($position, self::$positionXLref)) {
             return false;
@@ -107,9 +111,9 @@ class Legend
     }
 
     /**
-     * Get legend position as an Excel internal numeric value
+     * Get legend position as an Excel internal numeric value.
      *
-     * @return    number
+     * @return int
      */
     public function getPositionXL()
     {
@@ -117,11 +121,11 @@ class Legend
     }
 
     /**
-     * Set legend position using an Excel internal numeric value
+     * Set legend position using an Excel internal numeric value.
      *
-     * @param    number    $positionXL
+     * @param int $positionXL see self::XL_LEGEND_POSITION_*
      */
-    public function setPositionXL($positionXL = self::XL_LEGEND_POSITION_RIGHT)
+    public function setPositionXL($positionXL)
     {
         if (!isset(self::$positionXLref[$positionXL])) {
             return false;
@@ -135,7 +139,7 @@ class Legend
     /**
      * Get allow overlay of other elements?
      *
-     * @return    bool
+     * @return bool
      */
     public function getOverlay()
     {
@@ -145,10 +149,11 @@ class Legend
     /**
      * Set allow overlay of other elements?
      *
-     * @param    bool    $overlay
-     * @return    bool
+     * @param bool $overlay
+     *
+     * @return bool
      */
-    public function setOverlay($overlay = false)
+    public function setOverlay($overlay)
     {
         if (!is_bool($overlay)) {
             return false;
@@ -160,7 +165,7 @@ class Legend
     }
 
     /**
-     * Get Layout
+     * Get Layout.
      *
      * @return Layout
      */

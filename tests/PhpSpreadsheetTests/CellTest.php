@@ -4,17 +4,18 @@ namespace PhpOffice\PhpSpreadsheetTests;
 
 use PhpOffice\PhpSpreadsheet\Cell;
 use PhpOffice\PhpSpreadsheet\Exception;
+use PHPUnit_Framework_TestCase;
 
-class CellTest extends \PHPUnit_Framework_TestCase
+class CellTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider providerColumnString
+     *
+     * @param mixed $expectedResult
      */
-    public function testColumnIndexFromString()
+    public function testColumnIndexFromString($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'columnIndexFromString'], $args);
+        $result = Cell::columnIndexFromString(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -53,12 +54,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerColumnIndex
+     *
+     * @param mixed $expectedResult
      */
-    public function testStringFromColumnIndex()
+    public function testStringFromColumnIndex($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'stringFromColumnIndex'], $args);
+        $result = Cell::stringFromColumnIndex(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -69,12 +70,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerCoordinates
+     *
+     * @param mixed $expectedResult
      */
-    public function testCoordinateFromString()
+    public function testCoordinateFromString($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'coordinateFromString'], $args);
+        $result = Cell::coordinateFromString(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -127,12 +128,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerAbsoluteCoordinates
+     *
+     * @param mixed $expectedResult
      */
-    public function testAbsoluteCoordinateFromString()
+    public function testAbsoluteCoordinateFromString($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'absoluteCoordinate'], $args);
+        $result = Cell::absoluteCoordinate(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -157,12 +158,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerAbsoluteReferences
+     *
+     * @param mixed $expectedResult
      */
-    public function testAbsoluteReferenceFromString()
+    public function testAbsoluteReferenceFromString($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'absoluteReference'], $args);
+        $result = Cell::absoluteReference(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -187,12 +188,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerSplitRange
+     *
+     * @param mixed $expectedResult
      */
-    public function testSplitRange()
+    public function testSplitRange($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'splitRange'], $args);
+        $result = Cell::splitRange(...$args);
         foreach ($result as $key => $split) {
             if (!is_array($expectedResult[$key])) {
                 $this->assertEquals($expectedResult[$key], $split[0]);
@@ -209,12 +210,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerBuildRange
+     *
+     * @param mixed $expectedResult
      */
-    public function testBuildRange()
+    public function testBuildRange($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'buildRange'], $args);
+        $result = Cell::buildRange(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -223,28 +224,27 @@ class CellTest extends \PHPUnit_Framework_TestCase
         return require 'data/CellBuildRange.php';
     }
 
+    /**
+     * @expectedException \TypeError
+     */
     public function testBuildRangeInvalid()
     {
-        $cellRange = '';
-        try {
-            Cell::buildRange($cellRange);
-        } catch (\Exception $e) {
-            $this->assertInstanceOf(Exception::class, $e);
-            $this->assertEquals($e->getMessage(), 'Range does not contain any information');
-
-            return;
+        if (PHP_MAJOR_VERSION < 7) {
+            $this->markTestSkipped('Cannot catch type hinting error with PHP 5.6');
         }
-        $this->fail('An expected exception has not been raised.');
+
+        $cellRange = '';
+        Cell::buildRange($cellRange);
     }
 
     /**
      * @dataProvider providerRangeBoundaries
+     *
+     * @param mixed $expectedResult
      */
-    public function testRangeBoundaries()
+    public function testRangeBoundaries($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'rangeBoundaries'], $args);
+        $result = Cell::rangeBoundaries(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -255,12 +255,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerRangeDimension
+     *
+     * @param mixed $expectedResult
      */
-    public function testRangeDimension()
+    public function testRangeDimension($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'rangeDimension'], $args);
+        $result = Cell::rangeDimension(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -271,12 +271,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerGetRangeBoundaries
+     *
+     * @param mixed $expectedResult
      */
-    public function testGetRangeBoundaries()
+    public function testGetRangeBoundaries($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'getRangeBoundaries'], $args);
+        $result = Cell::getRangeBoundaries(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -287,12 +287,12 @@ class CellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerExtractAllCellReferencesInRange
+     *
+     * @param mixed $expectedResult
      */
-    public function testExtractAllCellReferencesInRange()
+    public function testExtractAllCellReferencesInRange($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([Cell::class, 'extractAllCellReferencesInRange'], $args);
+        $result = Cell::extractAllCellReferencesInRange(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 

@@ -2,8 +2,10 @@
 
 namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
 
+use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+
 /**
- * Copyright (c) 2006 - 2015 PhpSpreadsheet
+ * Copyright (c) 2006 - 2015 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,17 +14,17 @@ namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2015 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_BIFFwriter (used as the base for this class):
@@ -51,7 +53,7 @@ namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
 // *
 // *    This library is distributed in the hope that it will be useful,
 // *    but WITHOUT ANY WARRANTY; without even the implied warranty of
-// *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 // *    Lesser General Public License for more details.
 // *
 // *    You should have received a copy of the GNU Lesser General Public
@@ -61,32 +63,37 @@ namespace PhpOffice\PhpSpreadsheet\Writer\Xls;
 class BIFFwriter
 {
     /**
-     * The byte order of this architecture. 0 => little endian, 1 => big endian
+     * The byte order of this architecture. 0 => little endian, 1 => big endian.
+     *
      * @var int
      */
     private static $byteOrder;
 
     /**
-     * The string containing the data of the BIFF stream
+     * The string containing the data of the BIFF stream.
+     *
      * @var string
      */
     public $_data;
 
     /**
-     * The size of the data in bytes. Should be the same as strlen($this->_data)
+     * The size of the data in bytes. Should be the same as strlen($this->_data).
+     *
      * @var int
      */
     public $_datasize;
 
     /**
-     * The maximum length for a BIFF record (excluding record header and length field). See addContinue()
+     * The maximum length for a BIFF record (excluding record header and length field). See addContinue().
+     *
      * @var int
+     *
      * @see addContinue()
      */
     private $limit = 8224;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -112,7 +119,7 @@ class BIFFwriter
                 $byte_order = 1; // Big Endian
             } else {
                 // Give up. I'll fix this in a later version.
-                throw new \PhpOffice\PhpSpreadsheet\Writer\Exception('Required floating point format not supported on this platform.');
+                throw new WriterException('Required floating point format not supported on this platform.');
             }
             self::$byteOrder = $byte_order;
         }
@@ -121,7 +128,7 @@ class BIFFwriter
     }
 
     /**
-     * General storage function
+     * General storage function.
      *
      * @param string $data binary data to append
      */
@@ -135,9 +142,10 @@ class BIFFwriter
     }
 
     /**
-     * General storage function like append, but returns string instead of modifying $this->_data
+     * General storage function like append, but returns string instead of modifying $this->_data.
      *
      * @param string $data binary data to write
+     *
      * @return string
      */
     public function writeData($data)
@@ -154,8 +162,8 @@ class BIFFwriter
      * Writes Excel BOF record to indicate the beginning of a stream or
      * sub-stream in the BIFF file.
      *
-     * @param  int $type Type of BIFF file to write: 0x0005 Workbook,
-     *                       0x0010 Worksheet.
+     * @param int $type type of BIFF file to write: 0x0005 Workbook,
+     *                       0x0010 Worksheet
      */
     protected function storeBof($type)
     {
@@ -207,8 +215,9 @@ class BIFFwriter
      * This function takes a long BIFF record and inserts CONTINUE records as
      * necessary.
      *
-     * @param  string  $data The original binary data to be written
-     * @return string        A very convenient string of continue blocks
+     * @param string $data The original binary data to be written
+     *
+     * @return string A very convenient string of continue blocks
      */
     private function addContinue($data)
     {

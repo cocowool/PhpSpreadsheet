@@ -2,8 +2,10 @@
 
 namespace PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
 
+use PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,24 +14,24 @@ namespace PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
 class SpContainer
 {
     /**
-     * Parent Shape Group Container
+     * Parent Shape Group Container.
      *
-     * @var \PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer
+     * @var SpgrContainer
      */
     private $parent;
 
@@ -41,79 +43,79 @@ class SpContainer
     private $spgr = false;
 
     /**
-     * Shape type
+     * Shape type.
      *
      * @var int
      */
     private $spType;
 
     /**
-     * Shape flag
+     * Shape flag.
      *
      * @var int
      */
     private $spFlag;
 
     /**
-     * Shape index (usually group shape has index 0, and the rest: 1,2,3...)
+     * Shape index (usually group shape has index 0, and the rest: 1,2,3...).
      *
      * @var int
      */
     private $spId;
 
     /**
-     * Array of options
+     * Array of options.
      *
      * @var array
      */
     private $OPT;
 
     /**
-     * Cell coordinates of upper-left corner of shape, e.g. 'A1'
+     * Cell coordinates of upper-left corner of shape, e.g. 'A1'.
      *
      * @var string
      */
     private $startCoordinates;
 
     /**
-     * Horizontal offset of upper-left corner of shape measured in 1/1024 of column width
+     * Horizontal offset of upper-left corner of shape measured in 1/1024 of column width.
      *
      * @var int
      */
     private $startOffsetX;
 
     /**
-     * Vertical offset of upper-left corner of shape measured in 1/256 of row height
+     * Vertical offset of upper-left corner of shape measured in 1/256 of row height.
      *
      * @var int
      */
     private $startOffsetY;
 
     /**
-     * Cell coordinates of bottom-right corner of shape, e.g. 'B2'
+     * Cell coordinates of bottom-right corner of shape, e.g. 'B2'.
      *
      * @var string
      */
     private $endCoordinates;
 
     /**
-     * Horizontal offset of bottom-right corner of shape measured in 1/1024 of column width
+     * Horizontal offset of bottom-right corner of shape measured in 1/1024 of column width.
      *
      * @var int
      */
     private $endOffsetX;
 
     /**
-     * Vertical offset of bottom-right corner of shape measured in 1/256 of row height
+     * Vertical offset of bottom-right corner of shape measured in 1/256 of row height.
      *
      * @var int
      */
     private $endOffsetY;
 
     /**
-     * Set parent Shape Group Container
+     * Set parent Shape Group Container.
      *
-     * @param \PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer $parent
+     * @param SpgrContainer $parent
      */
     public function setParent($parent)
     {
@@ -121,9 +123,9 @@ class SpContainer
     }
 
     /**
-     * Get the parent Shape Group Container
+     * Get the parent Shape Group Container.
      *
-     * @return \PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer
+     * @return SpgrContainer
      */
     public function getParent()
     {
@@ -131,17 +133,17 @@ class SpContainer
     }
 
     /**
-     * Set whether this is a group shape
+     * Set whether this is a group shape.
      *
      * @param bool $value
      */
-    public function setSpgr($value = false)
+    public function setSpgr($value)
     {
         $this->spgr = $value;
     }
 
     /**
-     * Get whether this is a group shape
+     * Get whether this is a group shape.
      *
      * @return bool
      */
@@ -151,7 +153,7 @@ class SpContainer
     }
 
     /**
-     * Set the shape type
+     * Set the shape type.
      *
      * @param int $value
      */
@@ -161,7 +163,7 @@ class SpContainer
     }
 
     /**
-     * Get the shape type
+     * Get the shape type.
      *
      * @return int
      */
@@ -171,7 +173,7 @@ class SpContainer
     }
 
     /**
-     * Set the shape flag
+     * Set the shape flag.
      *
      * @param int $value
      */
@@ -181,7 +183,7 @@ class SpContainer
     }
 
     /**
-     * Get the shape flag
+     * Get the shape flag.
      *
      * @return int
      */
@@ -191,7 +193,7 @@ class SpContainer
     }
 
     /**
-     * Set the shape index
+     * Set the shape index.
      *
      * @param int $value
      */
@@ -201,7 +203,7 @@ class SpContainer
     }
 
     /**
-     * Get the shape index
+     * Get the shape index.
      *
      * @return int
      */
@@ -211,7 +213,7 @@ class SpContainer
     }
 
     /**
-     * Set an option for the Shape Group Container
+     * Set an option for the Shape Group Container.
      *
      * @param int $property The number specifies the option
      * @param mixed $value
@@ -222,9 +224,10 @@ class SpContainer
     }
 
     /**
-     * Get an option for the Shape Group Container
+     * Get an option for the Shape Group Container.
      *
      * @param int $property The number specifies the option
+     *
      * @return mixed
      */
     public function getOPT($property)
@@ -237,7 +240,7 @@ class SpContainer
     }
 
     /**
-     * Get the collection of options
+     * Get the collection of options.
      *
      * @return array
      */
@@ -247,17 +250,17 @@ class SpContainer
     }
 
     /**
-     * Set cell coordinates of upper-left corner of shape
+     * Set cell coordinates of upper-left corner of shape.
      *
-     * @param string $value
+     * @param string $value eg: 'A1'
      */
-    public function setStartCoordinates($value = 'A1')
+    public function setStartCoordinates($value)
     {
         $this->startCoordinates = $value;
     }
 
     /**
-     * Get cell coordinates of upper-left corner of shape
+     * Get cell coordinates of upper-left corner of shape.
      *
      * @return string
      */
@@ -267,17 +270,17 @@ class SpContainer
     }
 
     /**
-     * Set offset in x-direction of upper-left corner of shape measured in 1/1024 of column width
+     * Set offset in x-direction of upper-left corner of shape measured in 1/1024 of column width.
      *
      * @param int $startOffsetX
      */
-    public function setStartOffsetX($startOffsetX = 0)
+    public function setStartOffsetX($startOffsetX)
     {
         $this->startOffsetX = $startOffsetX;
     }
 
     /**
-     * Get offset in x-direction of upper-left corner of shape measured in 1/1024 of column width
+     * Get offset in x-direction of upper-left corner of shape measured in 1/1024 of column width.
      *
      * @return int
      */
@@ -287,17 +290,17 @@ class SpContainer
     }
 
     /**
-     * Set offset in y-direction of upper-left corner of shape measured in 1/256 of row height
+     * Set offset in y-direction of upper-left corner of shape measured in 1/256 of row height.
      *
      * @param int $startOffsetY
      */
-    public function setStartOffsetY($startOffsetY = 0)
+    public function setStartOffsetY($startOffsetY)
     {
         $this->startOffsetY = $startOffsetY;
     }
 
     /**
-     * Get offset in y-direction of upper-left corner of shape measured in 1/256 of row height
+     * Get offset in y-direction of upper-left corner of shape measured in 1/256 of row height.
      *
      * @return int
      */
@@ -307,17 +310,17 @@ class SpContainer
     }
 
     /**
-     * Set cell coordinates of bottom-right corner of shape
+     * Set cell coordinates of bottom-right corner of shape.
      *
-     * @param string $value
+     * @param string $value eg: 'A1'
      */
-    public function setEndCoordinates($value = 'A1')
+    public function setEndCoordinates($value)
     {
         $this->endCoordinates = $value;
     }
 
     /**
-     * Get cell coordinates of bottom-right corner of shape
+     * Get cell coordinates of bottom-right corner of shape.
      *
      * @return string
      */
@@ -327,17 +330,17 @@ class SpContainer
     }
 
     /**
-     * Set offset in x-direction of bottom-right corner of shape measured in 1/1024 of column width
+     * Set offset in x-direction of bottom-right corner of shape measured in 1/1024 of column width.
      *
      * @param int $endOffsetX
      */
-    public function setEndOffsetX($endOffsetX = 0)
+    public function setEndOffsetX($endOffsetX)
     {
         $this->endOffsetX = $endOffsetX;
     }
 
     /**
-     * Get offset in x-direction of bottom-right corner of shape measured in 1/1024 of column width
+     * Get offset in x-direction of bottom-right corner of shape measured in 1/1024 of column width.
      *
      * @return int
      */
@@ -347,17 +350,17 @@ class SpContainer
     }
 
     /**
-     * Set offset in y-direction of bottom-right corner of shape measured in 1/256 of row height
+     * Set offset in y-direction of bottom-right corner of shape measured in 1/256 of row height.
      *
      * @param int $endOffsetY
      */
-    public function setEndOffsetY($endOffsetY = 0)
+    public function setEndOffsetY($endOffsetY)
     {
         $this->endOffsetY = $endOffsetY;
     }
 
     /**
-     * Get offset in y-direction of bottom-right corner of shape measured in 1/256 of row height
+     * Get offset in y-direction of bottom-right corner of shape measured in 1/256 of row height.
      *
      * @return int
      */
@@ -369,7 +372,7 @@ class SpContainer
     /**
      * Get the nesting level of this spContainer. This is the number of spgrContainers between this spContainer and
      * the dgContainer. A value of 1 = immediately within first spgrContainer
-     * Higher nesting level occurs if and only if spContainer is part of a shape group
+     * Higher nesting level occurs if and only if spContainer is part of a shape group.
      *
      * @return int Nesting level
      */
@@ -378,7 +381,7 @@ class SpContainer
         $nestingLevel = 0;
 
         $parent = $this->getParent();
-        while ($parent instanceof \PhpOffice\PhpSpreadsheet\Shared\Escher\DgContainer\SpgrContainer) {
+        while ($parent instanceof SpgrContainer) {
             ++$nestingLevel;
             $parent = $parent->getParent();
         }

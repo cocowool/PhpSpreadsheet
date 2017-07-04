@@ -4,11 +4,12 @@ namespace PhpOffice\PhpSpreadsheetTests\Calculation;
 
 use PhpOffice\PhpSpreadsheet\Calculation\Functions;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef;
+use PHPUnit_Framework_TestCase;
 
 /**
- * Class LookupRefTest
+ * Class LookupRefTest.
  */
-class LookupRefTest extends \PHPUnit_Framework_TestCase
+class LookupRefTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
@@ -18,12 +19,12 @@ class LookupRefTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerHLOOKUP
      * @group fail19
+     *
+     * @param mixed $expectedResult
      */
-    public function testHLOOKUP()
+    public function testHLOOKUP($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([LookupRef::class, 'HLOOKUP'], $args);
+        $result = LookupRef::HLOOKUP(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -35,17 +36,34 @@ class LookupRefTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerVLOOKUP
      * @group fail19
+     *
+     * @param mixed $expectedResult
      */
-    public function testVLOOKUP()
+    public function testVLOOKUP($expectedResult, ...$args)
     {
-        $args = func_get_args();
-        $expectedResult = array_pop($args);
-        $result = call_user_func_array([LookupRef::class, 'VLOOKUP'], $args);
+        $result = LookupRef::VLOOKUP(...$args);
         $this->assertEquals($expectedResult, $result);
     }
 
     public function providerVLOOKUP()
     {
         return require 'data/Calculation/LookupRef/VLOOKUP.php';
+    }
+
+    /**
+     * @dataProvider providerMATCH
+     * @group fail19
+     *
+     * @param mixed $expectedResult
+     */
+    public function testMATCH($expectedResult, ...$args)
+    {
+        $result = LookupRef::MATCH(...$args);
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function providerMATCH()
+    {
+        return require 'data/Calculation/LookupRef/MATCH.php';
     }
 }

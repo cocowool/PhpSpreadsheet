@@ -2,8 +2,11 @@
 
 namespace PhpOffice\PhpSpreadsheet\Style;
 
+use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use PhpOffice\PhpSpreadsheet\IComparable;
+
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,19 +15,19 @@ namespace PhpOffice\PhpSpreadsheet\Style;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version ##VERSION##, ##DATE##
  */
-class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
+class Color extends Supervisor implements IComparable
 {
     /* Colors */
     const COLOR_BLACK = 'FF000000';
@@ -39,34 +42,34 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     const COLOR_DARKYELLOW = 'FF808000';
 
     /**
-     * Indexed colors array
+     * Indexed colors array.
      *
      * @var array
      */
     protected static $indexedColors;
 
     /**
-     * ARGB - Alpha RGB
+     * ARGB - Alpha RGB.
      *
      * @var string
      */
     protected $argb = null;
 
     /**
-     * Parent property name
+     * Parent property name.
      *
      * @var string
      */
     protected $parentPropertyName;
 
     /**
-     * Create a new Color
+     * Create a new Color.
      *
-     * @param    string    $pARGB            ARGB value for the colour
-     * @param    bool    $isSupervisor    Flag indicating if this is a supervisor or not
+     * @param string $pARGB ARGB value for the colour
+     * @param bool $isSupervisor Flag indicating if this is a supervisor or not
      *                                    Leave this value at default unless you understand exactly what
      *                                        its ramifications are
-     * @param    bool    $isConditional    Flag indicating if this is a conditional style or not
+     * @param bool $isConditional Flag indicating if this is a conditional style or not
      *                                    Leave this value at default unless you understand exactly what
      *                                        its ramifications are
      */
@@ -82,10 +85,11 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Bind parent. Only used for supervisor
+     * Bind parent. Only used for supervisor.
      *
      * @param mixed $parent
      * @param string $parentPropertyName
+     *
      * @return Color
      */
     public function bindParent($parent, $parentPropertyName = null)
@@ -98,7 +102,7 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
 
     /**
      * Get the shared style component for the currently active cell in currently active sheet.
-     * Only used for style supervisor
+     * Only used for style supervisor.
      *
      * @return Color
      */
@@ -115,9 +119,10 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Build style array from subcomponents
+     * Build style array from subcomponents.
      *
      * @param array $array
+     *
      * @return array
      */
     public function getStyleArray($array)
@@ -138,38 +143,35 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Apply styles from array
-     *
+     * Apply styles from array.
      * <code>
      * $spreadsheet->getActiveSheet()->getStyle('B2')->getFont()->getColor()->applyFromArray( array('rgb' => '808080') );
-     * </code>
+     * </code>.
      *
-     * @param    array    $pStyles    Array containing style information
-     * @throws    \PhpOffice\PhpSpreadsheet\Exception
+     * @param array $pStyles Array containing style information
+     *
+     * @throws PhpSpreadsheetException
+     *
      * @return Color
      */
-    public function applyFromArray($pStyles = null)
+    public function applyFromArray(array $pStyles)
     {
-        if (is_array($pStyles)) {
-            if ($this->isSupervisor) {
-                $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($pStyles));
-            } else {
-                if (isset($pStyles['rgb'])) {
-                    $this->setRGB($pStyles['rgb']);
-                }
-                if (isset($pStyles['argb'])) {
-                    $this->setARGB($pStyles['argb']);
-                }
-            }
+        if ($this->isSupervisor) {
+            $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($pStyles));
         } else {
-            throw new \PhpOffice\PhpSpreadsheet\Exception('Invalid style array passed.');
+            if (isset($pStyles['rgb'])) {
+                $this->setRGB($pStyles['rgb']);
+            }
+            if (isset($pStyles['argb'])) {
+                $this->setARGB($pStyles['argb']);
+            }
         }
 
         return $this;
     }
 
     /**
-     * Get ARGB
+     * Get ARGB.
      *
      * @return string
      */
@@ -183,12 +185,13 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Set ARGB
+     * Set ARGB.
      *
-     * @param string $pValue
+     * @param string $pValue see self::COLOR_*
+     *
      * @return Color
      */
-    public function setARGB($pValue = self::COLOR_BLACK)
+    public function setARGB($pValue)
     {
         if ($pValue == '') {
             $pValue = self::COLOR_BLACK;
@@ -204,7 +207,7 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get RGB
+     * Get RGB.
      *
      * @return string
      */
@@ -218,12 +221,13 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Set RGB
+     * Set RGB.
      *
-     * @param    string    $pValue    RGB value
+     * @param string $pValue RGB value
+     *
      * @return Color
      */
-    public function setRGB($pValue = '000000')
+    public function setRGB($pValue)
     {
         if ($pValue == '') {
             $pValue = '000000';
@@ -239,14 +243,16 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get a specified colour component of an RGB value
+     * Get a specified colour component of an RGB value.
      *
      * @private
-     * @param    string        $RGB        The colour as an RGB value (e.g. FF00CCCC or CCDDEE
-     * @param    int            $offset        Position within the RGB value to extract
-     * @param    bool        $hex        Flag indicating whether the component should be returned as a hex or a
+     *
+     * @param string $RGB The colour as an RGB value (e.g. FF00CCCC or CCDDEE
+     * @param int $offset Position within the RGB value to extract
+     * @param bool $hex Flag indicating whether the component should be returned as a hex or a
      *                                    decimal value
-     * @return    string        The extracted colour component
+     *
+     * @return string The extracted colour component
      */
     private static function getColourComponent($RGB, $offset, $hex = true)
     {
@@ -259,12 +265,13 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get the red colour component of an RGB value
+     * Get the red colour component of an RGB value.
      *
-     * @param    string        $RGB        The colour as an RGB value (e.g. FF00CCCC or CCDDEE
-     * @param    bool        $hex        Flag indicating whether the component should be returned as a hex or a
+     * @param string $RGB The colour as an RGB value (e.g. FF00CCCC or CCDDEE
+     * @param bool $hex Flag indicating whether the component should be returned as a hex or a
      *                                    decimal value
-     * @return    string        The red colour component
+     *
+     * @return string The red colour component
      */
     public static function getRed($RGB, $hex = true)
     {
@@ -272,12 +279,13 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get the green colour component of an RGB value
+     * Get the green colour component of an RGB value.
      *
-     * @param    string        $RGB        The colour as an RGB value (e.g. FF00CCCC or CCDDEE
-     * @param    bool        $hex        Flag indicating whether the component should be returned as a hex or a
+     * @param string $RGB The colour as an RGB value (e.g. FF00CCCC or CCDDEE
+     * @param bool $hex Flag indicating whether the component should be returned as a hex or a
      *                                    decimal value
-     * @return    string        The green colour component
+     *
+     * @return string The green colour component
      */
     public static function getGreen($RGB, $hex = true)
     {
@@ -285,12 +293,13 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get the blue colour component of an RGB value
+     * Get the blue colour component of an RGB value.
      *
-     * @param    string        $RGB        The colour as an RGB value (e.g. FF00CCCC or CCDDEE
-     * @param    bool        $hex        Flag indicating whether the component should be returned as a hex or a
+     * @param string $RGB The colour as an RGB value (e.g. FF00CCCC or CCDDEE
+     * @param bool $hex Flag indicating whether the component should be returned as a hex or a
      *                                    decimal value
-     * @return    string        The blue colour component
+     *
+     * @return string The blue colour component
      */
     public static function getBlue($RGB, $hex = true)
     {
@@ -298,11 +307,12 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Adjust the brightness of a color
+     * Adjust the brightness of a color.
      *
-     * @param    string        $hex    The colour as an RGBA or RGB value (e.g. FF00CCCC or CCDDEE)
-     * @param    float        $adjustPercentage    The percentage by which to adjust the colour as a float from -1 to 1
-     * @return    string        The adjusted colour as an RGBA or RGB value (e.g. FF00CCCC or CCDDEE)
+     * @param string $hex The colour as an RGBA or RGB value (e.g. FF00CCCC or CCDDEE)
+     * @param float $adjustPercentage The percentage by which to adjust the colour as a float from -1 to 1
+     *
+     * @return string The adjusted colour as an RGBA or RGB value (e.g. FF00CCCC or CCDDEE)
      */
     public static function changeBrightness($hex, $adjustPercentage)
     {
@@ -347,17 +357,18 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get indexed color
+     * Get indexed color.
      *
-     * @param    int            $pIndex            Index entry point into the colour array
-     * @param    bool        $background        Flag to indicate whether default background or foreground colour
+     * @param int $pIndex Index entry point into the colour array
+     * @param bool $background Flag to indicate whether default background or foreground colour
      *                                            should be returned if the indexed colour doesn't exist
-     * @return    Color
+     *
+     * @return Color
      */
     public static function indexedColor($pIndex, $background = false)
     {
         // Clean parameter
-        $pIndex = intval($pIndex);
+        $pIndex = (int) $pIndex;
 
         // Indexed colors
         if (is_null(self::$indexedColors)) {
@@ -433,9 +444,9 @@ class Color extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get hash code
+     * Get hash code.
      *
-     * @return string    Hash code
+     * @return string Hash code
      */
     public function getHashCode()
     {

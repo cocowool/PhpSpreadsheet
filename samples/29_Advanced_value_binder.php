@@ -1,5 +1,7 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\Cell;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 require __DIR__ . '/Header.php';
 
@@ -9,11 +11,11 @@ date_default_timezone_set('UTC');
 
 // Set value binder
 $helper->log('Set value binder');
-\PhpOffice\PhpSpreadsheet\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
+Cell::setValueBinder(new Cell\AdvancedValueBinder());
 
 // Create new Spreadsheet object
 $helper->log('Create new Spreadsheet object');
-$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
 $helper->log('Set document properties');
@@ -27,8 +29,8 @@ $spreadsheet->getProperties()->setCreator('Maarten Balliauw')
 
 // Set default font
 $helper->log('Set default font');
-$spreadsheet->getActiveSheet()->getDefaultStyle()->getFont()->setName('Arial');
-$spreadsheet->getActiveSheet()->getDefaultStyle()->getFont()->setSize(10);
+$spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+$spreadsheet->getDefaultStyle()->getFont()->setSize(10);
 
 // Set column widths
 $helper->log('Set column widths');

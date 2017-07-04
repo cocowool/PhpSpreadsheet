@@ -4,11 +4,17 @@ namespace PhpOffice\PhpSpreadsheet\Helper;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\IWriter;
+use ReflectionClass;
 
+/**
+ * Helper class to be used in sample code.
+ */
 class Sample
 {
     /**
-     * Returns wether we run on CLI or browser
+     * Returns whether we run on CLI or browser.
+     *
      * @return bool
      */
     public function isCli()
@@ -17,7 +23,8 @@ class Sample
     }
 
     /**
-     * Return the filename currently being executed
+     * Return the filename currently being executed.
+     *
      * @return string
      */
     public function getScriptFilename()
@@ -26,7 +33,8 @@ class Sample
     }
 
     /**
-     * Wether we are executing the index page
+     * Whether we are executing the index page.
+     *
      * @return bool
      */
     public function isIndex()
@@ -35,7 +43,8 @@ class Sample
     }
 
     /**
-     * Return the page title
+     * Return the page title.
+     *
      * @return string
      */
     public function getPageTitle()
@@ -44,7 +53,8 @@ class Sample
     }
 
     /**
-     * Return the page heading
+     * Return the page heading.
+     *
      * @return string
      */
     public function getPageHeading()
@@ -53,7 +63,8 @@ class Sample
     }
 
     /**
-     * Returns an array of all known samples
+     * Returns an array of all known samples.
+     *
      * @return string[] [$name => $path]
      */
     public function getSamples()
@@ -72,35 +83,32 @@ class Sample
     }
 
     /**
-     * Write documents
+     * Write documents.
      *
      * @param Spreadsheet $spreadsheet
      * @param string $filename
-     * @param array $writers
+     * @param string[] $writers
      */
-    public function write(Spreadsheet $spreadsheet, $filename, array $writers = ['Xlsx' => 'xlsx', 'Xls' => 'xls'])
+    public function write(Spreadsheet $spreadsheet, $filename, array $writers = ['Xlsx', 'Xls'])
     {
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $spreadsheet->setActiveSheetIndex(0);
 
         // Write documents
-        foreach ($writers as $format => $extension) {
-            $path = $this->getFilename($filename, $extension);
-            if (!is_null($extension)) {
-                $writer = IOFactory::createWriter($spreadsheet, $format);
-                $callStartTime = microtime(true);
-                $writer->save($path);
-                $this->logWrite($writer, $path, $callStartTime);
-            } else {
-                throw new \Exception('Missing extension');
-            }
+        foreach ($writers as $writerType) {
+            $path = $this->getFilename($filename, mb_strtolower($writerType));
+            $writer = IOFactory::createWriter($spreadsheet, $writerType);
+            $callStartTime = microtime(true);
+            $writer->save($path);
+            $this->logWrite($writer, $path, $callStartTime);
         }
 
         $this->logEndingNotes();
     }
 
     /**
-     * Returns the temporary directory and make sure it exists
+     * Returns the temporary directory and make sure it exists.
+     *
      * @return string
      */
     private function getTemporaryFolder()
@@ -114,9 +122,11 @@ class Sample
     }
 
     /**
-     * Returns the filename that should be used for sample output
+     * Returns the filename that should be used for sample output.
+     *
      * @param string $filename
      * @param string $extension
+     *
      * @return string
      */
     public function getFilename($filename, $extension = 'xlsx')
@@ -125,8 +135,10 @@ class Sample
     }
 
     /**
-     * Return a random temporary file name
+     * Return a random temporary file name.
+     *
      * @param string $extension
+     *
      * @return string
      */
     public function getTemporaryFilename($extension = 'xlsx')
@@ -143,7 +155,7 @@ class Sample
     }
 
     /**
-     * Log ending notes
+     * Log ending notes.
      */
     public function logEndingNotes()
     {
@@ -152,16 +164,19 @@ class Sample
     }
 
     /**
-     * Log a line about the write operation
-     * @param \PhpOffice\PhpSpreadsheet\Writer\IWriter $writer
+     * Log a line about the write operation.
+     *
+     * @param IWriter $writer
      * @param string $path
      * @param float $callStartTime
+     *
+     * @throws \ReflectionException
      */
-    public function logWrite(\PhpOffice\PhpSpreadsheet\Writer\IWriter $writer, $path, $callStartTime)
+    public function logWrite(IWriter $writer, $path, $callStartTime)
     {
         $callEndTime = microtime(true);
         $callTime = $callEndTime - $callStartTime;
-        $reflection = new \ReflectionClass($writer);
+        $reflection = new ReflectionClass($writer);
         $format = $reflection->getShortName();
         $message = "Write {$format} format to <code>{$path}</code>  in " . sprintf('%.4f', $callTime) . ' seconds';
 
@@ -169,7 +184,8 @@ class Sample
     }
 
     /**
-     * Log a line about the read operation
+     * Log a line about the read operation.
+     *
      * @param string $format
      * @param string $path
      * @param float $callStartTime

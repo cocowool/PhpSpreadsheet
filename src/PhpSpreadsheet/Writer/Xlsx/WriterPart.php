@@ -2,8 +2,10 @@
 
 namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 /**
- * Copyright (c) 2006 - 2015 PhpSpreadsheet
+ * Copyright (c) 2006 - 2015 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,63 +14,46 @@ namespace PhpOffice\PhpSpreadsheet\Writer\Xlsx;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2015 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
 abstract class WriterPart
 {
     /**
-     * Parent IWriter object
+     * Parent Xlsx object.
      *
-     * @var \PhpOffice\PhpSpreadsheet\Writer\IWriter
+     * @var Xlsx
      */
     private $parentWriter;
 
     /**
-     * Set parent IWriter object
-     *
-     * @param \PhpOffice\PhpSpreadsheet\Writer\IWriter    $pWriter
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
-     */
-    public function setParentWriter(\PhpOffice\PhpSpreadsheet\Writer\IWriter $pWriter = null)
-    {
-        $this->parentWriter = $pWriter;
-    }
-
-    /**
-     * Get parent IWriter object
+     * Get parent Xlsx object.
      *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
-     * @return \PhpOffice\PhpSpreadsheet\Writer\IWriter
+     *
+     * @return Xlsx
      */
     public function getParentWriter()
     {
-        if (!is_null($this->parentWriter)) {
-            return $this->parentWriter;
-        } else {
-            throw new \PhpOffice\PhpSpreadsheet\Writer\Exception('No parent \\PhpOffice\\PhpSpreadsheet\\Writer\\IWriter assigned.');
-        }
+        return $this->parentWriter;
     }
 
     /**
-     * Set parent IWriter object
+     * Set parent Xlsx object.
      *
-     * @param \PhpOffice\PhpSpreadsheet\Writer\IWriter    $pWriter
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @param Xlsx $pWriter
      */
-    public function __construct(\PhpOffice\PhpSpreadsheet\Writer\IWriter $pWriter = null)
+    public function __construct(Xlsx $pWriter)
     {
-        if (!is_null($pWriter)) {
-            $this->parentWriter = $pWriter;
-        }
+        $this->parentWriter = $pWriter;
     }
 }

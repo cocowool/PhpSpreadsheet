@@ -2,8 +2,11 @@
 
 namespace PhpOffice\PhpSpreadsheet\Style;
 
+use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use PhpOffice\PhpSpreadsheet\IComparable;
+
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,19 +15,19 @@ namespace PhpOffice\PhpSpreadsheet\Style;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
-class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
+class Border extends Supervisor implements IComparable
 {
     /* Border style */
     const BORDER_NONE = 'none';
@@ -43,33 +46,33 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     const BORDER_THIN = 'thin';
 
     /**
-     * Border style
+     * Border style.
      *
      * @var string
      */
     protected $borderStyle = self::BORDER_NONE;
 
     /**
-     * Border color
+     * Border color.
      *
      * @var Color
      */
     protected $color;
 
     /**
-     * Parent property name
+     * Parent property name.
      *
      * @var string
      */
     protected $parentPropertyName;
 
     /**
-     * Create a new Border
+     * Create a new Border.
      *
-     * @param    bool    $isSupervisor    Flag indicating if this is a supervisor or not
+     * @param bool $isSupervisor Flag indicating if this is a supervisor or not
      *                                    Leave this value at default unless you understand exactly what
      *                                        its ramifications are
-     * @param    bool    $isConditional    Flag indicating if this is a conditional style or not
+     * @param bool $isConditional Flag indicating if this is a conditional style or not
      *                                    Leave this value at default unless you understand exactly what
      *                                        its ramifications are
      */
@@ -88,10 +91,11 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Bind parent. Only used for supervisor
+     * Bind parent. Only used for supervisor.
      *
      * @param Borders $parent
      * @param string $parentPropertyName
+     *
      * @return Border
      */
     public function bindParent($parent, $parentPropertyName = null)
@@ -104,9 +108,10 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
 
     /**
      * Get the shared style component for the currently active cell in currently active sheet.
-     * Only used for style supervisor
+     * Only used for style supervisor.
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws PhpSpreadsheetException
+     *
      * @return Border
      */
     public function getSharedComponent()
@@ -117,7 +122,7 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
             case 'inside':
             case 'outline':
             case 'vertical':
-                throw new \PhpOffice\PhpSpreadsheet\Exception('Cannot get shared component for a pseudo-border.');
+                throw new PhpSpreadsheetException('Cannot get shared component for a pseudo-border.');
                 break;
             case 'bottom':
                 return $this->parent->getSharedComponent()->getBottom();
@@ -133,15 +138,16 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Build style array from subcomponents
+     * Build style array from subcomponents.
      *
      * @param array $array
+     *
      * @return array
      */
     public function getStyleArray($array)
     {
         switch ($this->parentPropertyName) {
-            case 'allBorders':
+            case 'allborders':
             case 'bottom':
             case 'diagonal':
             case 'horizontal':
@@ -151,7 +157,7 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
             case 'right':
             case 'top':
             case 'vertical':
-                $key = strtolower('vertical');
+                $key = strtolower($this->parentPropertyName);
                 break;
         }
 
@@ -159,12 +165,12 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Apply styles from array
+     * Apply styles from array.
      *
      * <code>
      * $spreadsheet->getActiveSheet()->getStyle('B2')->getBorders()->getTop()->applyFromArray(
      *        array(
-     *            'style' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_DASHDOT,
+     *            'style' => Border::BORDER_DASHDOT,
      *            'color' => array(
      *                'rgb' => '808080'
      *            )
@@ -172,32 +178,30 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
      * );
      * </code>
      *
-     * @param   array    $pStyles    Array containing style information
-     * @throws  \PhpOffice\PhpSpreadsheet\Exception
-     * @return  Border
+     * @param array $pStyles Array containing style information
+     *
+     * @throws PhpSpreadsheetException
+     *
+     * @return Border
      */
-    public function applyFromArray($pStyles = null)
+    public function applyFromArray(array $pStyles)
     {
-        if (is_array($pStyles)) {
-            if ($this->isSupervisor) {
-                $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($pStyles));
-            } else {
-                if (isset($pStyles['style'])) {
-                    $this->setBorderStyle($pStyles['style']);
-                }
-                if (isset($pStyles['color'])) {
-                    $this->getColor()->applyFromArray($pStyles['color']);
-                }
-            }
+        if ($this->isSupervisor) {
+            $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($pStyles));
         } else {
-            throw new \PhpOffice\PhpSpreadsheet\Exception('Invalid style array passed.');
+            if (isset($pStyles['style'])) {
+                $this->setBorderStyle($pStyles['style']);
+            }
+            if (isset($pStyles['color'])) {
+                $this->getColor()->applyFromArray($pStyles['color']);
+            }
         }
 
         return $this;
     }
 
     /**
-     * Get Border style
+     * Get Border style.
      *
      * @return string
      */
@@ -211,14 +215,15 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Set Border style
+     * Set Border style.
      *
-     * @param string|bool    $pValue
+     * @param string|bool $pValue
      *                            When passing a boolean, FALSE equates Border::BORDER_NONE
      *                                and TRUE to Border::BORDER_MEDIUM
+     *
      * @return Border
      */
-    public function setBorderStyle($pValue = self::BORDER_NONE)
+    public function setBorderStyle($pValue)
     {
         if (empty($pValue)) {
             $pValue = self::BORDER_NONE;
@@ -236,7 +241,7 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get Border Color
+     * Get Border Color.
      *
      * @return Color
      */
@@ -246,13 +251,15 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Set Border Color
+     * Set Border Color.
      *
-     * @param   Color $pValue
-     * @throws  \PhpOffice\PhpSpreadsheet\Exception
-     * @return  Border
+     * @param Color $pValue
+     *
+     * @throws PhpSpreadsheetException
+     *
+     * @return Border
      */
-    public function setColor(Color $pValue = null)
+    public function setColor(Color $pValue)
     {
         // make sure parameter is a real color and not a supervisor
         $color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;
@@ -268,9 +275,9 @@ class Border extends Supervisor implements \PhpOffice\PhpSpreadsheet\IComparable
     }
 
     /**
-     * Get hash code
+     * Get hash code.
      *
-     * @return string    Hash code
+     * @return string Hash code
      */
     public function getHashCode()
     {

@@ -2,12 +2,17 @@
 
 namespace PhpOffice\PhpSpreadsheetTests;
 
-class SampleTest extends \PHPUnit_Framework_TestCase
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PHPUnit_Framework_TestCase;
+
+class SampleTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      * @dataProvider providerSample
+     *
+     * @param mixed $sample
      */
     public function testSample($sample)
     {
@@ -20,11 +25,7 @@ class SampleTest extends \PHPUnit_Framework_TestCase
 
     public function providerSample()
     {
-        $skipped = [
-            '07 Reader PCLZip', // Xlsx cannot load file, leading to OpenOffice trying to and crashing. This is a bug that should be fixed
-            '20 Read Ods with PCLZip', // Crash: Call to undefined method \PhpOffice\PhpSpreadsheet\Shared\ZipArchive::statName()
-            '21 Pdf', // for now we don't have 3rdparty libs to tests PDF, but it should be added
-        ];
+        $skipped = [];
 
         // Unfortunately some tests are too long be ran with code-coverage
         // analysis on Travis, so we need to exclude them
@@ -32,15 +33,12 @@ class SampleTest extends \PHPUnit_Framework_TestCase
         if (in_array('--coverage-clover', $argv)) {
             $tooLongToBeCovered = [
                 '06 Largescale',
-                '06 Largescale with cellcaching',
-                '06 Largescale with cellcaching sqlite',
-                '06 Largescale with cellcaching sqlite3',
                 '13 CalculationCyclicFormulae',
             ];
             $skipped = array_merge($skipped, $tooLongToBeCovered);
         }
 
-        $helper = new \PhpOffice\PhpSpreadsheet\Helper\Sample();
+        $helper = new Sample();
         $samples = [];
         foreach ($helper->getSamples() as $name => $sample) {
             if (!in_array($name, $skipped)) {

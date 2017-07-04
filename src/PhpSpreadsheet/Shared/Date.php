@@ -2,8 +2,15 @@
 
 namespace PhpOffice\PhpSpreadsheet\Shared;
 
+use DateTimeInterface;
+use DateTimeZone;
+use PhpOffice\PhpSpreadsheet\Calculation\DateTime;
+use PhpOffice\PhpSpreadsheet\Calculation\Functions;
+use PhpOffice\PhpSpreadsheet\Cell;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+
 /**
- * Copyright (c) 2006 - 2016 PhpSpreadsheet
+ * Copyright (c) 2006 - 2016 PhpSpreadsheet.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -12,17 +19,17 @@ namespace PhpOffice\PhpSpreadsheet\Shared;
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PhpSpreadsheet
+ *
  * @copyright  Copyright (c) 2006 - 2016 PhpSpreadsheet (https://github.com/PHPOffice/PhpSpreadsheet)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version    ##VERSION##, ##DATE##
  */
 class Date
 {
@@ -35,7 +42,7 @@ class Date
      * Planned usage for locale settings
      *
      * @public
-     * @var    string[]
+     * @var string[]
      */
     public static $monthNames = [
         'Jan' => 'January',
@@ -54,7 +61,7 @@ class Date
 
     /*
      * @public
-     * @var    string[]
+     * @var string[]
      */
     public static $numberSuffixes = [
         'st',
@@ -68,7 +75,7 @@ class Date
      * Value is either CALENDAR_WINDOWS_1900 (1900) or CALENDAR_MAC_1904 (1904)
      *
      * @private
-     * @var    int
+     * @var int
      */
     protected static $excelCalendar = self::CALENDAR_WINDOWS_1900;
 
@@ -76,15 +83,16 @@ class Date
      * Default timezone to use for DateTime objects
      *
      * @private
-     * @var    null|\DateTimeZone
+     * @var null|\DateTimeZone
      */
     protected static $defaultTimeZone;
 
     /**
-     * Set the Excel calendar (Windows 1900 or Mac 1904)
+     * Set the Excel calendar (Windows 1900 or Mac 1904).
      *
-     * @param     int    $baseDate           Excel base date (1900 or 1904)
-     * @return    bool                        Success or failure
+     * @param int $baseDate Excel base date (1900 or 1904)
+     *
+     * @return bool Success or failure
      */
     public static function setExcelCalendar($baseDate)
     {
@@ -99,9 +107,9 @@ class Date
     }
 
     /**
-     * Return the Excel calendar (Windows 1900 or Mac 1904)
+     * Return the Excel calendar (Windows 1900 or Mac 1904).
      *
-     * @return     int    Excel base date (1900 or 1904)
+     * @return int Excel base date (1900 or 1904)
      */
     public static function getExcelCalendar()
     {
@@ -109,12 +117,14 @@ class Date
     }
 
     /**
-     * Set the Default timezone to use for dates
+     * Set the Default timezone to use for dates.
      *
-     * @param     string|\DateTimeZone    $timeZone    The timezone to set for all Excel datetimestamp to PHP DateTime Object conversions
-     * @throws    \Exception
-     * @return    bool                              Success or failure
-     * @return    bool                              Success or failure
+     * @param string|DateTimeZone $timeZone The timezone to set for all Excel datetimestamp to PHP DateTime Object conversions
+     *
+     * @throws \Exception
+     *
+     * @return bool Success or failure
+     * @return bool Success or failure
      */
     public static function setDefaultTimezone($timeZone)
     {
@@ -128,48 +138,52 @@ class Date
     }
 
     /**
-     * Return the Default timezone being used for dates
+     * Return the Default timezone being used for dates.
      *
-     * @return     \DateTimeZone    The timezone being used as default for Excel timestamp to PHP DateTime object
+     * @return DateTimeZone The timezone being used as default for Excel timestamp to PHP DateTime object
      */
     public static function getDefaultTimezone()
     {
         if (self::$defaultTimeZone === null) {
-            self::$defaultTimeZone = new \DateTimeZone('UTC');
+            self::$defaultTimeZone = new DateTimeZone('UTC');
         }
 
         return self::$defaultTimeZone;
     }
 
     /**
-     * Validate a timezone
+     * Validate a timezone.
      *
-     * @param     string|\DateTimeZone    $timeZone    The timezone to validate, either as a timezone string or object
-     * @throws    \Exception
-     * @return    \DateTimeZone                        The timezone as a timezone object
-     * @return    \DateTimeZone                        The timezone as a timezone object
+     * @param string|DateTimeZone $timeZone The timezone to validate, either as a timezone string or object
+     *
+     * @throws \Exception
+     *
+     * @return DateTimeZone The timezone as a timezone object
+     * @return DateTimeZone The timezone as a timezone object
      */
     protected static function validateTimeZone($timeZone)
     {
-        if (is_object($timeZone) && $timeZone instanceof \DateTimeZone) {
+        if (is_object($timeZone) && $timeZone instanceof DateTimeZone) {
             return $timeZone;
         } elseif (is_string($timeZone)) {
-            return new \DateTimeZone($timeZone);
+            return new DateTimeZone($timeZone);
         }
         throw new \Exception('Invalid timezone');
     }
 
     /**
-     * Convert a MS serialized datetime value from Excel to a PHP Date/Time object
+     * Convert a MS serialized datetime value from Excel to a PHP Date/Time object.
      *
-     * @param     int|float                      $excelTimestamp      MS Excel serialized date/time value
-     * @param     \DateTimeZone|string|null          $timeZone            The timezone to assume for the Excel timestamp,
+     * @param int|float $excelTimestamp MS Excel serialized date/time value
+     * @param DateTimeZone|string|null $timeZone The timezone to assume for the Excel timestamp,
      *                                                                        if you don't want to treat it as a UTC value
      *                                                                    Use the default (UST) unless you absolutely need a conversion
-     * @throws    \Exception
-     * @return    \DateTime                          PHP date/time object
+     *
+     * @throws \Exception
+     *
+     * @return \DateTime PHP date/time object
      */
-    public static function excelToDateTimeObject($excelTimestamp = 0, $timeZone = null)
+    public static function excelToDateTimeObject($excelTimestamp, $timeZone = null)
     {
         $timeZone = ($timeZone === null) ? self::getDefaultTimezone() : self::validateTimeZone($timeZone);
         if ($excelTimestamp < 1.0) {
@@ -199,31 +213,34 @@ class Date
     }
 
     /**
-     * Convert a MS serialized datetime value from Excel to a unix timestamp
+     * Convert a MS serialized datetime value from Excel to a unix timestamp.
      *
-     * @param     int|float                      $excelTimestamp        MS Excel serialized date/time value
-     * @param     \DateTimeZone|string|null          $timeZone            The timezone to assume for the Excel timestamp,
+     * @param int|float $excelTimestamp MS Excel serialized date/time value
+     * @param DateTimeZone|string|null $timeZone The timezone to assume for the Excel timestamp,
      *                                                                        if you don't want to treat it as a UTC value
      *                                                                    Use the default (UST) unless you absolutely need a conversion
-     * @throws    \Exception
-     * @return    int                            Unix timetamp for this date/time
+     *
+     * @throws \Exception
+     *
+     * @return int Unix timetamp for this date/time
      */
-    public static function excelToTimestamp($excelTimestamp = 0, $timeZone = null)
+    public static function excelToTimestamp($excelTimestamp, $timeZone = null)
     {
         return (int) self::excelToDateTimeObject($excelTimestamp, $timeZone)
             ->format('U');
     }
 
     /**
-     *    Convert a date from PHP to an MS Excel serialized date/time value
+     * Convert a date from PHP to an MS Excel serialized date/time value.
      *
-     *    @param    mixed            $dateValue            Unix Timestamp or PHP DateTime object or a string
-     *    @return   float|bool    Excel date/time value
+     * @param mixed $dateValue Unix Timestamp or PHP DateTime object or a string
+     *
+     * @return float|bool Excel date/time value
      *                                  or boolean FALSE on failure
      */
-    public static function PHPToExcel($dateValue = 0)
+    public static function PHPToExcel($dateValue)
     {
-        if ((is_object($dateValue)) && ($dateValue instanceof \DateTimeInterface)) {
+        if ((is_object($dateValue)) && ($dateValue instanceof DateTimeInterface)) {
             return self::dateTimeToExcel($dateValue);
         } elseif (is_numeric($dateValue)) {
             return self::timestampToExcel($dateValue);
@@ -235,12 +252,13 @@ class Date
     }
 
     /**
-     *    Convert a PHP DateTime object to an MS Excel serialized date/time value
+     * Convert a PHP DateTime object to an MS Excel serialized date/time value.
      *
-     *    @param    \DateTimeInterface    $dateValue            PHP DateTime object
-     *    @return   float                 MS Excel serialized date/time value
+     * @param DateTimeInterface $dateValue PHP DateTime object
+     *
+     * @return float MS Excel serialized date/time value
      */
-    public static function dateTimeToExcel(\DateTimeInterface $dateValue = null)
+    public static function dateTimeToExcel(DateTimeInterface $dateValue)
     {
         return self::formattedPHPToExcel(
             $dateValue->format('Y'),
@@ -253,12 +271,13 @@ class Date
     }
 
     /**
-     *    Convert a Unix timestamp to an MS Excel serialized date/time value
+     * Convert a Unix timestamp to an MS Excel serialized date/time value.
      *
-     *    @param    \DateTimeInterface    $dateValue       Unix Timestamp
-     *    @return   float                 MS Excel serialized date/time value
+     * @param DateTimeInterface $dateValue Unix Timestamp
+     *
+     * @return float MS Excel serialized date/time value
      */
-    public static function timestampToExcel($dateValue = 0)
+    public static function timestampToExcel($dateValue)
     {
         if (!is_numeric($dateValue)) {
             return false;
@@ -268,15 +287,16 @@ class Date
     }
 
     /**
-     * formattedPHPToExcel
+     * formattedPHPToExcel.
      *
-     * @param    int    $year
-     * @param    int    $month
-     * @param    int    $day
-     * @param    int    $hours
-     * @param    int    $minutes
-     * @param    int    $seconds
-     * @return   float    Excel date/time value
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int $hours
+     * @param int $minutes
+     * @param int $seconds
+     *
+     * @return float Excel date/time value
      */
     public static function formattedPHPToExcel($year, $month, $day, $hours = 0, $minutes = 0, $seconds = 0)
     {
@@ -316,10 +336,11 @@ class Date
     /**
      * Is a given cell a date/time?
      *
-     * @param   \PhpOffice\PhpSpreadsheet\Cell    $pCell
-     * @return  bool
+     * @param Cell $pCell
+     *
+     * @return bool
      */
-    public static function isDateTime(\PhpOffice\PhpSpreadsheet\Cell $pCell)
+    public static function isDateTime(Cell $pCell)
     {
         return self::isDateTimeFormat(
             $pCell->getWorksheet()->getStyle(
@@ -331,10 +352,11 @@ class Date
     /**
      * Is a given number format a date/time?
      *
-     * @param   \PhpOffice\PhpSpreadsheet\Style\NumberFormat    $pFormat
-     * @return  bool
+     * @param NumberFormat $pFormat
+     *
+     * @return bool
      */
-    public static function isDateTimeFormat(\PhpOffice\PhpSpreadsheet\Style\NumberFormat $pFormat)
+    public static function isDateTimeFormat(NumberFormat $pFormat)
     {
         return self::isDateTimeFormatCode($pFormat->getFormatCode());
     }
@@ -344,12 +366,13 @@ class Date
     /**
      * Is a given number format code a date/time?
      *
-     * @param     string    $pFormatCode
-     * @return     bool
+     * @param string $pFormatCode
+     *
+     * @return bool
      */
-    public static function isDateTimeFormatCode($pFormatCode = '')
+    public static function isDateTimeFormatCode($pFormatCode)
     {
-        if (strtolower($pFormatCode) === strtolower(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_GENERAL)) {
+        if (strtolower($pFormatCode) === strtolower(NumberFormat::FORMAT_GENERAL)) {
             //    "General" contains an epoch letter 'e', so we trap for it explicitly here (case-insensitive check)
             return false;
         }
@@ -361,28 +384,28 @@ class Date
         // Switch on formatcode
         switch ($pFormatCode) {
             //    Explicitly defined date formats
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDD2:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DDMMYYYY:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DMYSLASH:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DMYMINUS:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DMMINUS:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_MYMINUS:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DATETIME:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_TIME1:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_TIME2:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_TIME3:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_TIME4:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_TIME5:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_TIME6:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_TIME7:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_TIME8:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_YYYYMMDDSLASH:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_XLSX14:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_XLSX15:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_XLSX16:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_XLSX17:
-            case \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_XLSX22:
+            case NumberFormat::FORMAT_DATE_YYYYMMDD:
+            case NumberFormat::FORMAT_DATE_YYYYMMDD2:
+            case NumberFormat::FORMAT_DATE_DDMMYYYY:
+            case NumberFormat::FORMAT_DATE_DMYSLASH:
+            case NumberFormat::FORMAT_DATE_DMYMINUS:
+            case NumberFormat::FORMAT_DATE_DMMINUS:
+            case NumberFormat::FORMAT_DATE_MYMINUS:
+            case NumberFormat::FORMAT_DATE_DATETIME:
+            case NumberFormat::FORMAT_DATE_TIME1:
+            case NumberFormat::FORMAT_DATE_TIME2:
+            case NumberFormat::FORMAT_DATE_TIME3:
+            case NumberFormat::FORMAT_DATE_TIME4:
+            case NumberFormat::FORMAT_DATE_TIME5:
+            case NumberFormat::FORMAT_DATE_TIME6:
+            case NumberFormat::FORMAT_DATE_TIME7:
+            case NumberFormat::FORMAT_DATE_TIME8:
+            case NumberFormat::FORMAT_DATE_YYYYMMDDSLASH:
+            case NumberFormat::FORMAT_DATE_XLSX14:
+            case NumberFormat::FORMAT_DATE_XLSX15:
+            case NumberFormat::FORMAT_DATE_XLSX16:
+            case NumberFormat::FORMAT_DATE_XLSX17:
+            case NumberFormat::FORMAT_DATE_XLSX22:
                 return true;
         }
 
@@ -415,12 +438,13 @@ class Date
     }
 
     /**
-     * Convert a date/time string to Excel time
+     * Convert a date/time string to Excel time.
      *
-     * @param    string    $dateValue        Examples: '2009-12-31', '2009-12-31 15:59', '2009-12-31 15:59:10'
-     * @return    float|false        Excel date/time serial value
+     * @param string $dateValue Examples: '2009-12-31', '2009-12-31 15:59', '2009-12-31 15:59:10'
+     *
+     * @return float|false Excel date/time serial value
      */
-    public static function stringToExcel($dateValue = '')
+    public static function stringToExcel($dateValue)
     {
         if (strlen($dateValue) < 2) {
             return false;
@@ -429,15 +453,15 @@ class Date
             return false;
         }
 
-        $dateValueNew = \PhpOffice\PhpSpreadsheet\Calculation\DateTime::DATEVALUE($dateValue);
+        $dateValueNew = DateTime::DATEVALUE($dateValue);
 
-        if ($dateValueNew === \PhpOffice\PhpSpreadsheet\Calculation\Functions::VALUE()) {
+        if ($dateValueNew === Functions::VALUE()) {
             return false;
         }
 
         if (strpos($dateValue, ':') !== false) {
-            $timeValue = \PhpOffice\PhpSpreadsheet\Calculation\DateTime::TIMEVALUE($dateValue);
-            if ($timeValue === \PhpOffice\PhpSpreadsheet\Calculation\Functions::VALUE()) {
+            $timeValue = DateTime::TIMEVALUE($dateValue);
+            if ($timeValue === Functions::VALUE()) {
                 return false;
             }
             $dateValueNew += $timeValue;
@@ -447,10 +471,11 @@ class Date
     }
 
     /**
-     * Converts a month name (either a long or a short name) to a month number
+     * Converts a month name (either a long or a short name) to a month number.
      *
-     * @param     string    $month    Month name or abbreviation
-     * @return    int|string     Month number (1 - 12), or the original string argument if it isn't a valid month name
+     * @param string $month Month name or abbreviation
+     *
+     * @return int|string Month number (1 - 12), or the original string argument if it isn't a valid month name
      */
     public static function monthStringToNumber($month)
     {
@@ -466,16 +491,17 @@ class Date
     }
 
     /**
-     * Strips an ordinal froma numeric value
+     * Strips an ordinal froma numeric value.
      *
-     * @param     string    $day      Day number with an ordinal
-     * @return    int|string      The integer value with any ordinal stripped, or the original string argument if it isn't a valid numeric
+     * @param string $day Day number with an ordinal
+     *
+     * @return int|string The integer value with any ordinal stripped, or the original string argument if it isn't a valid numeric
      */
     public static function dayStringToNumber($day)
     {
         $strippedDayValue = (str_replace(self::$numberSuffixes, '', $day));
         if (is_numeric($strippedDayValue)) {
-            return (integer) $strippedDayValue;
+            return (int) $strippedDayValue;
         }
 
         return $day;

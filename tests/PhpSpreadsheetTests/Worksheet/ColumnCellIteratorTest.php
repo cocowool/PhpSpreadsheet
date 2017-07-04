@@ -5,8 +5,9 @@ namespace PhpOffice\PhpSpreadsheetTests\Worksheet;
 use PhpOffice\PhpSpreadsheet\Cell;
 use PhpOffice\PhpSpreadsheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\ColumnCellIterator;
+use PHPUnit_Framework_TestCase;
 
-class ColumnCellIteratorTest extends \PHPUnit_Framework_TestCase
+class ColumnCellIteratorTest extends PHPUnit_Framework_TestCase
 {
     public $mockWorksheet;
     public $mockColumnCell;
@@ -22,11 +23,11 @@ class ColumnCellIteratorTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->mockWorksheet->expects($this->any())
-                 ->method('getHighestRow')
-                 ->will($this->returnValue(5));
+            ->method('getHighestRow')
+            ->will($this->returnValue(5));
         $this->mockWorksheet->expects($this->any())
-                 ->method('getCellByColumnAndRow')
-                 ->will($this->returnValue($this->mockCell));
+            ->method('getCellByColumnAndRow')
+            ->will($this->returnValue($this->mockCell));
     }
 
     public function testIteratorFullRange()
